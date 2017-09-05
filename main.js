@@ -2,7 +2,6 @@ const electron = require("electron");
 const {app, BrowserWindow,ipcMain} = electron;
 
 let mainWin="";
-let childWin="";
 
 app.on("ready", ()=>{
 	mainWin = new BrowserWindow({ width:1200, height:600});

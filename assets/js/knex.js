@@ -13,6 +13,6 @@ knex.schema.createTableIfNotExists('users', function (table) {
   table.timestamps();
 }).then(function(){
     return knex.insert([{name: 'nuttaphon'},{name:'rattana'}]).into('users');
-})
+});
  
  
