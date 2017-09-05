@@ -14,7 +14,7 @@ var knex = require('knex')({
 exports.selectAllUser = ()=>{
   return  new Observable(observer=>{
       try{
-        var xxx = knex('_users').select('firstname','lastname').map(function(row) {
+        var xxx = knex('_users').select('firstname','lastname').map((row)=> {
           observer.next(row); 
         });
         //observer.complete();
@@ -22,6 +22,15 @@ exports.selectAllUser = ()=>{
          observer.error(ex);
       }
   });
+}
+exports.insertUser = ()=>{
+      
+       return knex.insert([
+        {firstname: 'drwrt',lastname:'etert',tel:"0862229416"},
+        {firstname: 'gdfgdg',lastname:'etertertet',tel:"0892229416"}
+        ]).into('_users'); 
+       
+    
 }
 // knex.schema.createTableIfNotExists('_users', function (table) {
 //   table.increments('user_id');

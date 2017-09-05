@@ -18,12 +18,21 @@
 
     <script> 
         var mysql = require("./assets/js/mysql.js");
-        mysql.selectAllUser().subscribe(
-            (next)=>{
-                $('#show').append(next.firstname+" "+next.lastname+"<br>");
-            },
-            (err)=>{console.log(err);}
-        );
+        mysql.insertUser().then((res)=>{
+            show();
+        }).catch(err=>{
+            $('#show').html("<div class='alert alert-danger'>"+err+"</div>");
+        })
+        show = function(){
+            mysql.selectAllUser().subscribe(
+                (next)=>{
+                    $('#show').append(next.firstname+" "+next.lastname+"<br>");
+                },
+                (err)=>{console.log(err);}
+            );
+        }
+        
+        
     </script>
 </body>
 </html>
