@@ -12,10 +12,18 @@
 <body>
     <div class="container-fluid">
         <h3 class="alert alert-info">Ezform Framework</h3>
-    
+        <div id="show"></div>    
     </div>
 
 
-    <script>require("./assets/js/knex.js");</script>
+    <script> 
+        var mysql = require("./assets/js/mysql.js");
+        mysql.selectAllUser().subscribe(
+            (next)=>{
+                $('#show').append(next.firstname+" "+next.lastname+"<br>");
+            },
+            (err)=>{console.log(err);}
+        );
+    </script>
 </body>
 </html>
