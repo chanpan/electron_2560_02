@@ -8,7 +8,8 @@ var knex = require('knex')({
 exports.knexCreateTable = (tables,fields) => {
   return knex.schema.createTableIfNotExists(tables, function (table) {
     for(let i of fields){
-        table.string(i.Field);
+        table.text(i.Field,'longtext');
+        
     }
   });
 } 

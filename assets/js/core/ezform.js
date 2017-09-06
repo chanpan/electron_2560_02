@@ -31,17 +31,20 @@ exports.GetEzform = (ezf_id)=>{
 }//get EzformField
 
 exports.CreateTable=(data)=>{
+ 
     let settings = {
         "async": true,
         "crossDomain": true,
-        "url": `${url}get-ezf-table?format=json&tbdata=${data[0].ezf_table}`,
+        "url":url+"get-ezf-table?format=json&tbdata="+data.ezfields[0]['ezf_table'],
         "method": "GET",
         "headers": {
             "x-token": "549968af6006a2fe6c016bf9070b4899",
         }
       }
-      $.ajax(settings).done(function (res) {
-        knexRemote.knexCreateTable(data[0].ezf_table,res).then((res)=>{})
-        .catch((err)=>{});
+      $.ajax(settings).done(function (fields) {
+        knexRemote.knexCreateTable(data.ezfields[0]['ezf_table'],fields).then((res)=>{
+            console.log("success.");
+        })
+        .catch((err)=>{$('#show').html("<div class='alert alert-danger'>"+err+"</div>")});
       });    
 }//Create tbdata_ezf_id
