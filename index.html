@@ -12,27 +12,32 @@
 <body>
     <div class="container-fluid">
         <h3 class="alert alert-info">Ezform Framework</h3>
-        <div id="show"></div>    
+        <div id="show"></div>
+
+         <div class="row">
+            <div class="col-md-8 col-xs-8">
+                <input type="text" id="ezf_id" class="form-control" value="1504586024078967800">
+            </div>
+            <div class="col-md-4 col-xs-4">
+                <button id="btnSend" class="btn btn-info">Send </button>
+            </div>
+         </div>
+
+            
     </div>
 
 
     <script> 
-        var mysql = require("./assets/js/mysql.js");
-        mysql.insertUser().then((res)=>{
-            show();
-        }).catch(err=>{
-            $('#show').html("<div class='alert alert-danger'>"+err+"</div>");
-        })
-        show = function(){
-            mysql.selectAllUser().subscribe(
-                (next)=>{
-                    $('#show').append(next.firstname+" "+next.lastname+"<br>");
+        $("#btnSend").on("click",()=>{
+            let ezform = require('./assets/js/core/ezform.js');
+            let ezf_id = $("#ezf_id").val();
+            ezform.GetEzform(ezf_id).subscribe(
+                (res)=>{
+                    console.log(res);
                 },
-                (err)=>{console.log(err);}
+                err=>console.log(err)
             );
-        }
-        
-        
+        });
     </script>
 </body>
 </html>

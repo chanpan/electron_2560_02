@@ -21,7 +21,7 @@ exports.selectAllUser = ()=>{
       }catch(ex){
          observer.error(ex);
       }
-  });
+  }); 
 }
 exports.insertUser = ()=>{
       
