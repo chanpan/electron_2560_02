@@ -33,9 +33,9 @@
             let ezf_id = $("#ezf_id").val();
             ezform.GetEzform(ezf_id).subscribe(
                 (res)=>{
-                    console.log(res);
+                    ezform.CreateTable(res);
                 },
-                err=>console.log(err)
+                err=>$('#show').html("<div class='alert alert-danger'>"+err+"</div>")
             );
         });
     </script>

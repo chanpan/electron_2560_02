@@ -1,7 +1,7 @@
 var knex = require('knex')({
   client: 'sqlite3',
   connection: {
-    filename: "assets/ezform.db"
+    filename: "assets/ezform.db" 
   },
   useNullAsDefault: true
 });
