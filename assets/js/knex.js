@@ -6,10 +6,10 @@ var knex = require('knex')({
   useNullAsDefault: true
 });
 exports.knexCreateTable = (tables,fields) => {
+  //alter table array2 ตัว สำหรับเช็คค่า
   return knex.schema.createTableIfNotExists(tables, function (table) {
     for(let i of fields){
         table.text(i.Field,'longtext');
-        
     }
   });
 } 
