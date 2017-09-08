@@ -1,45 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electron Framework</title>
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- JavaScript Core -->
-    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
+
 <body>
     <div class="container-fluid">
         <h3 class="alert alert-info">Ezform Framework</h3>
         <div id="show"></div>
 
-         <div class="row">
-            <div class="col-md-8 col-xs-8">
-                <input type="text" id="ezf_id" class="form-control" value="1504586024078967800">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ezf_id" placeholder="Search for..." value="1504586024078967800">
+                        <span class="input-group-btn">
+                                        <button id="btnSend" class="btn btn-info">Get Form</button>
+                                </span>
+                    </div>
+                    <!-- /input-group -->
+
+                </div>
+
             </div>
-            <div class="col-md-4 col-xs-4">
-                <button id="btnSend" class="btn btn-info">Get Form</button>
+        </div>
+
+        <div class="row mt-15">
+            <div class="container-fluid">
+                <div id="show-ezform"></div>
             </div>
-         </div> 
-         
-         <div class="row">
-             <div id="show-ezform"></div>
-         </div>
+        </div>
     </div>
 
 
-    <script> 
-        $("#btnSend").on("click",()=>{
+    <script>
+        $("#btnSend").on("click", () => {
             let ezform = require('./assets/js/core/ezform.js');
             let ezf_id = $("#ezf_id").val();
             ezform.GetEzform(ezf_id).subscribe(
-                (res)=>{
+                (res) => {
                     ezform.CreateTable(res);
                 },
-                err=>$('#show').html("<div class='alert alert-danger'>"+err+"</div>")
+                err => $('#show').html("<div class='alert alert-danger'>" + err + "</div>")
             );
         });
     </script>
 </body>
+
 </html>

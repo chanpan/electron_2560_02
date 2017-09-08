@@ -46,6 +46,7 @@ exports.CreateTable=(data)=>{
         }
       }
       $.ajax(settings).done(function (fields) {
+        
         ezformType.TextInput(1,{class:'form-control', id:'100100', name:'100100'});
         // knexRemote.knexGetColumnSqlite3(data.ezfields[0]['ezf_table']).then((res)=>{
         //     console.log(res);
