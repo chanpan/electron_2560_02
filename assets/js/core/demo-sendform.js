@@ -44,3 +44,91 @@ module.exports = {
             });
      }
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://www.thaicarecloud.org/ezforms/ezform-service/get-ezf-table?format=json&tbdata=tbdata_1504586024078967800",
+  "method": "GET",
+  "headers": {
+    "x-token": "549968af6006a2fe6c016bf9070b4899"
+  }
+}
+var arr1=[];
+var arr2=[];
+var arr3=[];
+$.ajax(settings).done(function (response) {
+  for(let i of response){
+      arr1.push(i.Field);//sqlite
+      arr2.push(i.Field);//ezform
+  }
+  for(let i of arr1){
+     $("#show1").append(i+'<br>');
+  }
+  arr2.push('555');
+  for(let i of arr2){
+     $("#show2").append(i+'<br>');
+  }
+      var min='';
+      var out=[];
+      var cbool=true;
+      var num = 0;
+      while(cbool==true){
+        min=arr1[num];
+        if(min != arr2[num]){
+            out.push(arr2[num]);
+        }
+        num++;
+        if(num == arr2.length){
+            cbool=false;
+        }
+      }
+  for(let i of out){ 
+    $('#show3').append(i+"<br>");
+  }
+  
+});
+
+
+
+</script>
+</head>
+<body>
+
+<div class='row'>
+    <div class='container'>
+        <div class='col-md-6 col-xs-4'>
+            <div id='show1'></div>
+        </div>
+        <div class='col-md-6 col-xs-4'>
+            <div id='show2'></div>
+        </div>
+        <div class='col-md-6 col-xs-4'>
+            <div id='show3'></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

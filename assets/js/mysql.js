@@ -23,15 +23,14 @@ exports.selectAllUser = ()=>{
       }
   }); 
 }
-exports.insertUser = ()=>{
-      
-       return knex.insert([
-        {firstname: 'drwrt',lastname:'etert',tel:"0862229416"},
-        {firstname: 'gdfgdg',lastname:'etertertet',tel:"0892229416"}
-        ]).into('_users'); 
-       
-    
-}
+exports.insertUser = () => {
+  return knex
+    .insert([
+      { firstname: "drwrt", lastname: "etert", tel: "0862229416" },
+      { firstname: "gdfgdg", lastname: "etertertet", tel: "0892229416" }
+    ])
+    .into("_users");
+};
 // knex.schema.createTableIfNotExists('_users', function (table) {
 //   table.increments('user_id');
 //   table.string('firstname');

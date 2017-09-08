@@ -4,7 +4,7 @@ require('rxjs/add/observable/of');
 require('rxjs/add/operator/map');
 
 /********** knex.js ************/
-var knexRemote = require('../knex.js');
+var knexRemote = require('../sql/knex-sqlite3.js');
 
 /*********** url thaicarecloud *************/
 var url="https://www.thaicarecloud.org/ezforms/ezform-service/";
@@ -21,7 +21,6 @@ exports.GetEzform = (ezf_id)=>{
               "x-token": "549968af6006a2fe6c016bf9070b4899",
             },
           };
-        
         $.ajax(settings).done(function (response) {
             ob.next(response);
         }).fail(function (jqXHR, textStatus) {
@@ -30,8 +29,8 @@ exports.GetEzform = (ezf_id)=>{
     });
 }//get EzformField
 
+/*********** ทำหน้าที่ สร้าง table ใน local *************/
 exports.CreateTable=(data)=>{
- 
     let settings = {
         "async": true,
         "crossDomain": true,
@@ -42,8 +41,15 @@ exports.CreateTable=(data)=>{
         }
       }
       $.ajax(settings).done(function (fields) {
-        knexRemote.knexCreateTable(data.ezfields[0]['ezf_table'],fields).then((res)=>{
-            console.log("success.");
+        // knexRemote.knexCreateTable(data.ezfields[0]['ezf_table'],fields).then((res)=>{
+        //     console.log("success.");
+        // })
+        // 
+        knexRemote.knexGetColumnSqlite3(data.ezfields[0]['ezf_table']).then((res)=>{
+            console.log(res);
+            for(let i of res){
+                console.log(i.name);
+            } 
         })
         .catch((err)=>{$('#show').html("<div class='alert alert-danger'>"+err+"</div>")});
       });    
