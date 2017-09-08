@@ -9,6 +9,11 @@ var knexRemote = require('../sql/knex-sqlite3.js');
 /*********** url thaicarecloud *************/
 var url="https://www.thaicarecloud.org/ezforms/ezform-service/";
 
+
+/*********** ezform-type *************/
+var ezformType = require('./ezform-type.js');
+
+
 /*********** ทำหน้าที่ get ezform_fields *************/
 exports.GetEzform = (ezf_id)=>{
     return new Observable(ob=>{
@@ -41,16 +46,13 @@ exports.CreateTable=(data)=>{
         }
       }
       $.ajax(settings).done(function (fields) {
-        // knexRemote.knexCreateTable(data.ezfields[0]['ezf_table'],fields).then((res)=>{
-        //     console.log("success.");
+        ezformType.TextInput(1,{class:'form-control', id:'100100', name:'100100'});
+        // knexRemote.knexGetColumnSqlite3(data.ezfields[0]['ezf_table']).then((res)=>{
+        //     console.log(res);
+        //     for(let i of res){
+        //         console.log(i.name);
+        //     } 
         // })
-        // 
-        knexRemote.knexGetColumnSqlite3(data.ezfields[0]['ezf_table']).then((res)=>{
-            console.log(res);
-            for(let i of res){
-                console.log(i.name);
-            } 
-        })
-        .catch((err)=>{$('#show').html("<div class='alert alert-danger'>"+err+"</div>")});
+        // .catch((err)=>{$('#show').html("<div class='alert alert-danger'>"+err+"</div>")});
       });    
 }//Create tbdata_ezf_id
