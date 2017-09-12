@@ -34,8 +34,36 @@ exports.GetEzform = (ezf_id)=>{
     });
 }//get EzformField
 
-/*********** ทำหน้าที่ สร้าง table ใน local *************/
-exports.CreateTable=(data)=>{
+exports.CreateTableEzformFieldToLocal = (table="",field, values=[])=>{
+    if(table == ""){
+        table == "ezform_fields";
+    }
+    field=['ezf_field_id','ezf_field_name','ezf_field_type','ezf_field_lenght','ezf_field_label'];
+
+    knexRemote.knexCreateTableIfNotExists(table, field)
+    .then(res=>{
+        knexRemote.KnexAlterUnique(table,'ezf_field_id').then(()=>console.log("unique ezf_field_id success"));
+        for(let i of values.ezfields){
+
+            let val = {
+                'ezf_field_id':i.ezf_field_id,
+                'ezf_field_name':i.ezf_field_name,
+                'ezf_field_type':i.ezf_field_type,
+                'ezf_field_lenght':i.ezf_field_lenght,
+                'ezf_field_label':i.ezf_field_label 
+            };
+           
+            knexRemote.knexInsertColumToLocal(table, val)
+            .then(res=>console.log("INSERT "+table+" success."))
+            .catch(err=>console.log(err));
+        }
+    })
+    .catch(err=>console.log("Create table "+table+" Error.")); 
+}//Ezform create table to local ezform_fields
+
+
+/*********** ทำหน้าที่ สร้าง table tbdata ใน local *************/
+exports.CreateTableTbdata=(data)=>{
     let settings = {
         "async": true,
         "crossDomain": true,
@@ -46,8 +74,17 @@ exports.CreateTable=(data)=>{
         }
       }
       $.ajax(settings).done(function (fields) {
-        
-        ezformType.TextInput(1,{class:'form-control', id:'100100', name:'100100'});
+        let field=[];
+        for(let i of fields){
+            field.push(i.Field);
+        }
+        let tables = 'tbdata_'+data.ezform.ezf_id;
+        knexRemote.knexCreateTableIfNotExists(tables,field,'id')
+        .then((res)=>{
+           console.log("Create tbdata_"+data.ezform.ezf_id+" success.");
+        })
+        .catch(err=>console.log(err));
+         
         // knexRemote.knexGetColumnSqlite3(data.ezfields[0]['ezf_table']).then((res)=>{
         //     console.log(res);
         //     for(let i of res){
@@ -57,3 +94,26 @@ exports.CreateTable=(data)=>{
         // .catch((err)=>{$('#show').html("<div class='alert alert-danger'>"+err+"</div>")});
       });    
 }//Create tbdata_ezf_id
+
+exports.EzformCheckType = (data)=>{
+    $("#show-ezform-container").show(); //แสดง well 
+     for(let ezfield of data.ezfields){
+        if(ezfield.ezf_field_type == 0){//type ==0 hidden field
+            //console.log(ezfield);
+        }else if(ezfield.ezf_field_type == 1){ // type==1 textbox
+            console.log(ezfield.ezf_field_type);
+            let options = {
+                lenghts:'col-md-'+ezfield.ezf_field_lenght,
+                ezf_field_id:ezfield.ezf_field_id,
+                varname:ezfield.ezf_field_name,
+                ezf_id:data.ezform.ezf_id
+            };
+            ezformType.TextInput(ezfield.ezf_field_label, ezfield.ezf_field_label, options,'');
+            console.log(data);
+            //ezformType.TextInput();
+        }
+
+     }
+
+     ezformType.Button();
+}

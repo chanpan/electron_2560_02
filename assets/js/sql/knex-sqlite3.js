@@ -6,24 +6,22 @@ var knex = require('knex')({
   useNullAsDefault: true
 });//knex connection sqlite3
 
-exports.knexCreateTableIfNotExists = (tables,fields) => {
-  //alter table array2 ตัว สำหรับเช็คค่า
-  /**********  Example
-      var knexRemote = require('../sql/knex-sqlite3.js'); 
-      let fields = [{Field:'id'},{Field:'name'}];
-      knexRemote.knexCreateTableIfNotExists('1504586024078967800',fields)
-      .then((res)=>{
-          ........
-      }).catch(err=>{console.log(err)}); 
-   **********/
+exports.knexCreateTableIfNotExists = (tables,columns,primary=[]) => {
   return knex.schema.createTableIfNotExists(tables, function (table) {
-    for(let i of fields){
-        table.text(i.Field,'longtext');
+    if(primary == '' || primary.length == 0){
+      primary='id';  
+        table.increments(primary);    
+    }else{
+       table.primary(primary);
+    }
+     
+    for(let i of columns){
+        table.text(i,'longtext').collate('utf8_unicode_ci').comment(i).nullable();
     }
   });
 }//CreateTable
 
-exports.knexAlterTableAdd = (tables,fields,types='longtext')=>{ 
+exports.knexAlterAddColumn = (tables,columns,types='longtext')=>{ 
   /**********  Example
       var knexRemote = require('../sql/knex-sqlite3.js'); 
       knexRemote.knexAlterTableAdd('1504586024078967800','id','integer')
@@ -32,10 +30,14 @@ exports.knexAlterTableAdd = (tables,fields,types='longtext')=>{
       }).catch(err=>{console.log(err)}); 
    **********/
   return knex.schema.alterTable(tables, function(table) {
-    table.text(fields,types);
+    table.text(columns,types);
   });
 }//AlterTableAdd
-
+exports.knexAlterRenameColumn = (tables,columns, to)=>{
+   return knex.schema.alterTable(tables, function(table){
+      table.renameColumn(columns, to)
+   });
+}
 exports.knexAlterDropColumn = (tables,fields)=>{
   /**********  Example
       var knexRemote = require('../sql/knex-sqlite3.js'); 
@@ -87,8 +89,23 @@ exports.knexGetColumnSqlite3 = (tables)=>{
 }//GetColumnSqlite3
 
 
+exports.KnexAlterUnique = (tables, fields) =>{
+ // t.string('email').unique().collate('utf8_unicode_ci');
+  return knex.schema.alterTable(tables, function(table) {
+    table.unique(fields);
+  });
+}
+exports.KnexAlterPrimaryKey = (tables, fields) =>{
+  // t.string('email').unique().collate('utf8_unicode_ci');
+   return knex.schema.alterTable(tables, function(f) {
+     f.primary(fields);
+   });
+ }
 
-
+//////////////////////////////////////////////////// Insrt table =///////////////////////////////////////////////////////
+exports.knexInsertColumToLocal = (table,data) => {
+  return knex.insert(data).into(table);
+}
 
 
 

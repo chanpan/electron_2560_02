@@ -1,0 +1,77 @@
+<div id="container">
+
+    <div class="container-fluid">
+
+
+
+        <div class="well">
+            <div id="show-error-connect"></div>
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ezf_id" placeholder="Search for..." value="1504586024078967800">
+                        <span class="input-group-btn">
+                                        <button id="btnGetForm" class="btn btn-info">Get Form</button>
+                                </span>
+                    </div>
+                    <!-- /input-group -->
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="well" id="show-ezform-container" style="display:none;">
+            <div class="row mt-15">
+                <div class="container-fluid">
+                    <div id="show-ezform"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- id=container -->
+
+<script>
+    $("#btnGetForm").on("click", () => {
+        let ezform = require('./assets/js/core/ezform.js');
+        let ezf_id = $("#ezf_id").val();
+        ezform.GetEzform(ezf_id).subscribe(
+            //get ezform fields
+            (res) => {
+                let ezf_fields = Object.keys(res.ezfields[0]);
+                let min = 8;
+                for(i=0; i<res.ezfields.length; i++){
+                    if(Object.keys(res.ezfields[i]).length > min){
+                        ezf_fields = Object.keys(res.ezfields[i]);
+                    }
+                }
+                ezform.CreateTableTbdata(res);
+                ezform.CreateTableEzformFieldToLocal('ezform_fields',ezf_fields,res);
+                
+            },
+
+            err => {
+                let err_template = `
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                
+                <strong><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+Error!</strong> ${err}
+                </div>
+                `;
+                $('#show-error-connect').html(err_template);
+            }
+        );
+    });
+
+</script>
+
+<style>
+    .form-control {
+        border-radius: 0 !important;
+        box-shadow: none;
+        border-color: #d2d6de;
+    }
+</style>
