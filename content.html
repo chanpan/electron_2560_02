@@ -47,9 +47,11 @@
                         ezf_fields = Object.keys(res.ezfields[i]);
                     }
                 }
+                console.log((new Date().getTime()).toString(36));
                 ezform.CreateTableTbdata(res);
                 ezform.CreateTableEzformFieldToLocal('ezform_fields',ezf_fields,res);
-                
+                ezform.EzformCheckType(res);
+
             },
 
             err => {

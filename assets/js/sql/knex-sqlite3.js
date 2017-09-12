@@ -22,13 +22,6 @@ exports.knexCreateTableIfNotExists = (tables,columns,primary=[]) => {
 }//CreateTable
 
 exports.knexAlterAddColumn = (tables,columns,types='longtext')=>{ 
-  /**********  Example
-      var knexRemote = require('../sql/knex-sqlite3.js'); 
-      knexRemote.knexAlterTableAdd('1504586024078967800','id','integer')
-      .then((res)=>{
-          ........
-      }).catch(err=>{console.log(err)}); 
-   **********/
   return knex.schema.alterTable(tables, function(table) {
     table.text(columns,types);
   });
@@ -39,52 +32,20 @@ exports.knexAlterRenameColumn = (tables,columns, to)=>{
    });
 }
 exports.knexAlterDropColumn = (tables,fields)=>{
-  /**********  Example
-      var knexRemote = require('../sql/knex-sqlite3.js'); 
-      knexRemote.knexAlterDropColumn('1504586024078967800','firstname')
-      .then((res)=>{
-          ........
-      }).catch(err=>{console.log(err)}); 
-   **********/ 
   return knex.schema.alterTable(tables, function(table) {
     table.dropColumn(fields);
   });
 }//Alter Drop Column
 
 exports.knexDropTable = (tables)=>{
-  /**********  Example
-      var knexRemote = require('../sql/knex-sqlite3.js'); 
-      knexRemote.knexDropTable('1504586024078967800')
-      .then((res)=>{
-        ........
-      }).catch(err=>{console.log(err)}); 
-   **********/
   return knex.schema.dropTable(tables);
 }//DropTable
 
 exports.knexDropTableIfExists = (tables)=>{
-    /**********  Example
-      var knexRemote = require('../sql/knex-sqlite3.js'); 
-      knexRemote.knexDropTableIfExists('1504586024078967800')
-      .then((res)=>{
-            for(let i of res){
-                console.log(i.name);
-            } 
-      }).catch(err=>{console.log(err)}); 
-   **********/
   return knex.schema.dropTableIfExists(tables)
 }//DropTableIfExists
 
 exports.knexGetColumnSqlite3 = (tables)=>{
-   /**********  Example
-      var knexRemote = require('../sql/knex-sqlite3.js'); 
-      knexRemote.knexGetColumnSqlite3('1504586024078967800')
-      .then((res)=>{
-            for(let i of res){
-                console.log(i.name);
-            } 
-      }).catch(err=>{console.log(err)}); 
-   **********/
    return knex.raw("PRAGMA table_info("+tables+")");
 }//GetColumnSqlite3
 

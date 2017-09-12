@@ -95,7 +95,7 @@ exports.CreateTableTbdata=(data)=>{
       });    
 }//Create tbdata_ezf_id
 
-exports.EzformCheckType = (data)=>{
+exports.EzformCheckType = (data,value='')=>{
     $("#show-ezform-container").show(); //แสดง well 
      for(let ezfield of data.ezfields){
         if(ezfield.ezf_field_type == 0){//type ==0 hidden field
@@ -108,7 +108,7 @@ exports.EzformCheckType = (data)=>{
                 varname:ezfield.ezf_field_name,
                 ezf_id:data.ezform.ezf_id
             };
-            ezformType.TextInput(ezfield.ezf_field_label, ezfield.ezf_field_label, options,'');
+            ezformType.TextInput(value, ezfield.ezf_field_label, options,'');
             console.log(data);
             //ezformType.TextInput();
         }

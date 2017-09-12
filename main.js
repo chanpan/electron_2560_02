@@ -4,7 +4,11 @@ const {app, BrowserWindow,ipcMain} = electron;
 let mainWin="";
 
 app.on("ready", ()=>{
-	mainWin = new BrowserWindow({ width:1200, height:600});
+	mainWin = new BrowserWindow({ 
+    width:1200, height:600,
+    minWidth:800,
+    minHeight: 600
+  });
 	mainWin.loadURL(`file://${__dirname}/index.html`);
 	app.on('closed', function () { mainWin = null; app.exit() });
 });
