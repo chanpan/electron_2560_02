@@ -78,7 +78,7 @@ exports.CreateTableTbdata=(data)=>{
         for(let i of fields){
             field.push(i.Field);
         }
-        let tables = 'tbdata_'+data.ezform.ezf_id;
+        let tables = data.ezfields[0]['ezf_table'];
         knexRemote.knexCreateTableIfNotExists(tables,field,'id')
         .then((res)=>{
            console.log("Create tbdata_"+data.ezform.ezf_id+" success.");
@@ -100,13 +100,14 @@ exports.EzformCheckType = (data,value='')=>{
      for(let ezfield of data.ezfields){
         if(ezfield.ezf_field_type == 0){//type ==0 hidden field
             //console.log(ezfield);
-        }else if(ezfield.ezf_field_type == 1){ // type==1 textbox
-            console.log(ezfield.ezf_field_type);
+        }else if(ezfield.ezf_field_type == 1){ // type==1 textinput
+             
             let options = {
                 lenghts:'col-md-'+ezfield.ezf_field_lenght,
                 ezf_field_id:ezfield.ezf_field_id,
                 varname:ezfield.ezf_field_name,
-                ezf_id:data.ezform.ezf_id
+                ezf_id:data.ezform.ezf_id,
+                ezf_field_name:ezfield.ezf_field_name
             };
             ezformType.TextInput(value, ezfield.ezf_field_label, options,'');
             console.log(data);
@@ -115,5 +116,14 @@ exports.EzformCheckType = (data,value='')=>{
 
      }
 
-     ezformType.Button();
+     
 }
+
+
+/** 
+ * for each key value 
+ *  var f = [{fname:'nuttaphon', lname:'chanpan'}];
+   for(let i in f){
+   	console.log(Object.keys(f[i]));
+   }
+ * **/

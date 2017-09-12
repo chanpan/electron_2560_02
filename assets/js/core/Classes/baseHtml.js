@@ -1,7 +1,7 @@
 exports.getInputName = (ezfield)=>{
     //return EZ{ezf_id}[{ezf_field_name}] EZ010000[var_name]
     //let names = `name='${name}'`;
-    return `EZ${ezfield.ezf_id}[${ezfield.ezf_field_name}]`;
+    return `EZ${ezfield.ezf_field_id}[${ezfield.ezf_field_name}]`;
 }//get Name ezform  
 
 exports.getInputId = (name)=>{

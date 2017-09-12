@@ -9,7 +9,7 @@ var knex = require('knex')({
 exports.knexCreateTableIfNotExists = (tables,columns,primary=[]) => {
   return knex.schema.createTableIfNotExists(tables, function (table) {
     if(primary == '' || primary.length == 0){
-      primary='id';  
+        primary='id';  
         table.increments(primary);    
     }else{
        table.primary(primary);
@@ -18,6 +18,7 @@ exports.knexCreateTableIfNotExists = (tables,columns,primary=[]) => {
     for(let i of columns){
         table.text(i,'longtext').collate('utf8_unicode_ci').comment(i).nullable();
     }
+    
   });
 }//CreateTable
 
