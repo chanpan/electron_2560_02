@@ -119,6 +119,12 @@ exports.EzformCheckType = (data,value='')=>{
      
 }
 
+// exports.EzformSave = (table,data)=>{
+//     knexRemote.knexInsertColumToLocal(table,data).then(res=>{
+//         console.log('success');
+//     })
+//     .then(err=>console.log(err));
+// }
 
 /** 
  * for each key value 

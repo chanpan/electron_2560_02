@@ -19,7 +19,9 @@
         <div class="well" id="show-ezform-container" style="display:none;">
             <div class="row mt-15">
                 <div class="container-fluid">
-                    <div id="show-ezform"></div>
+                    <form id="frmEzform">
+                        <div id="show-ezform"></div>
+                    </form>
                 </div>
             </div>
 
@@ -63,8 +65,9 @@
 <!-- id=container -->
 
 <script>
+    let ezform = require('./assets/js/core/ezform.js');
     $("#btnGetForm").on("click", () => {
-        let ezform = require('./assets/js/core/ezform.js');
+        
         let ezf_id = $("#ezf_id").val();
         ezform.GetEzform(ezf_id).subscribe(
             //get ezform fields
@@ -76,7 +79,7 @@
                         ezf_fields = Object.keys(res.ezfields[i]);
                     }
                 }
-                console.log((new Date().getTime()).toString(36));
+                
                 ezform.CreateTableTbdata(res);//tbdata_ ...
                 ezform.CreateTableEzformFieldToLocal('ezform_fields',ezf_fields,res);
                 ezform.EzformCheckType(res);
@@ -97,8 +100,11 @@ Error!</strong> ${err}
         );
     });
 
-   $("#save-submit2").click(()=>{alert('OK');});
-
+   $("#save-submit2").click(()=>{
+         alert("OK");
+         //ezform.EzformSave();
+   });
+    
 </script>
 
 <style>
